@@ -3,36 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pomodoro</title>
+    <title>Pomodoro Executive</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- FontAwesome para ícones táticos -->
+    <!-- FontAwesome para Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Fontes Inter & JetBrains Mono para precisão e legibilidade -->
+    <!-- Fontes Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
-    
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        tactical: {
-                            950: '#0b0e14',
-                            900: '#121722',
-                            800: '#1b2234',
-                            700: '#2a344d',
-                            600: '#3d4b6e',
-                            amber: '#f59e0b',
-                            amberDark: '#d97706',
-                            emerald: '#10b981',
-                            cyan: '#06b6d4'
-                        }
-                    },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace']
@@ -41,279 +28,495 @@
             }
         }
     </script>
-    
+
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0b0e14;
-            color: #e2e8f0;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
+        /* TEMAS DINÂMICOS - FUNDO ESCURO PADRÃO MANTIDO, APENAS Destaques/DADOS MUDAM */
+        :root, .theme-amber {
+            --bg-body: #0b0e14;
+            --bg-card: #121722;
+            --bg-element: #1b2234;
+            --border-app: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            
+            --color-primary: #f59e0b;
+            --color-primary-hover: #d97706;
+            --color-primary-muted: rgba(245, 158, 11, 0.15);
+            --color-primary-glow: rgba(245, 158, 11, 0.35);
+            --color-btn-text: #000000;
         }
 
-        /* Efeito de anel de progresso circular tático */
-        .progress-ring__circle {
-            transition: stroke-dashoffset 0.4s ease-in-out;
+        .theme-orange {
+            --bg-body: #0b0e14;
+            --bg-card: #121722;
+            --bg-element: #1b2234;
+            --border-app: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            
+            --color-primary: #f97316;
+            --color-primary-hover: #ea580c;
+            --color-primary-muted: rgba(249, 115, 22, 0.15);
+            --color-primary-glow: rgba(249, 115, 22, 0.35);
+            --color-btn-text: #000000;
+        }
+
+        .theme-blue-orange {
+            --bg-body: #0b0e14;
+            --bg-card: #121722;
+            --bg-element: #1b2234;
+            --border-app: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            
+            --color-primary: #38bdf8;
+            --color-primary-hover: #0284c7;
+            --color-primary-muted: rgba(56, 189, 248, 0.15);
+            --color-primary-glow: rgba(56, 189, 248, 0.35);
+            --color-btn-text: #0f172a;
+        }
+
+        .theme-purple {
+            --bg-body: #0b0e14;
+            --bg-card: #121722;
+            --bg-element: #1b2234;
+            --border-app: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            
+            --color-primary: #a855f7;
+            --color-primary-hover: #9333ea;
+            --color-primary-muted: rgba(168, 85, 247, 0.15);
+            --color-primary-glow: rgba(168, 85, 247, 0.35);
+            --color-btn-text: #ffffff;
+        }
+
+        .theme-cyan {
+            --bg-body: #0b0e14;
+            --bg-card: #121722;
+            --bg-element: #1b2234;
+            --border-app: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            
+            --color-primary: #06b6d4;
+            --color-primary-hover: #0891b2;
+            --color-primary-muted: rgba(6, 182, 212, 0.15);
+            --color-primary-glow: rgba(6, 182, 212, 0.35);
+            --color-btn-text: #000000;
+        }
+
+        .theme-emerald {
+            --bg-body: #0b0e14;
+            --bg-card: #121722;
+            --bg-element: #1b2234;
+            --border-app: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            
+            --color-primary: #10b981;
+            --color-primary-hover: #059669;
+            --color-primary-muted: rgba(16, 185, 129, 0.15);
+            --color-primary-glow: rgba(16, 185, 129, 0.35);
+            --color-btn-text: #000000;
+        }
+
+        .theme-light {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-element: #f1f5f9;
+            --border-app: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            
+            --color-primary: #2563eb;
+            --color-primary-hover: #1d4ed8;
+            --color-primary-muted: rgba(37, 99, 235, 0.12);
+            --color-primary-glow: rgba(37, 99, 235, 0.25);
+            --color-btn-text: #ffffff;
+        }
+
+        /* APLICAÇÃO GLOBAL DAS VARIÁVEIS DE TEMA */
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+        }
+
+        .bg-app-card { background-color: var(--bg-card); }
+        .bg-app-element { background-color: var(--bg-element); }
+        .border-app { border-color: var(--border-app); }
+        .text-main { color: var(--text-main); }
+        .text-app-muted { color: var(--text-muted); }
+        .stroke-app-element { stroke: var(--bg-element); }
+        
+        .bg-brand { background-color: var(--color-primary); }
+        .text-brand { color: var(--color-primary); }
+        .border-brand { border-color: var(--color-primary); }
+
+        .progress-ring-circle {
+            stroke: var(--color-primary);
             transform: rotate(-90deg);
             transform-origin: 50% 50%;
+            transition: stroke-dashoffset 0.35s ease, stroke 0.3s ease;
         }
 
-        /* Custom Scrollbar minimalista */
-        ::-webkit-scrollbar {
-            width: 5px;
+        .btn-brand {
+            background-color: var(--color-primary);
+            color: var(--color-btn-text);
         }
-        ::-webkit-scrollbar-track {
-            background: #121722;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2a344d;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3d4b6e;
+        .btn-brand:hover {
+            background-color: var(--color-primary-hover);
         }
 
-        /* Animação suave para brilho sutil */
-        .glow-amber {
-            box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.25);
+        .glow-effect {
+            box-shadow: 0 0 20px var(--color-primary-glow);
         }
-        .glow-emerald {
-            box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.25);
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(150, 150, 150, 0.2); border-radius: 4px; }
+
+        /* Remover setinhas dos inputs numéricos */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
         }
-        .glow-cyan {
-            box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.25);
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* Estilização customizada e alinhada para selects */
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%239ca3af' viewBox='0 0 16 16'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 0.6rem center;
+            padding-right: 1.75rem !important;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between items-center p-3 sm:p-6 transition-colors duration-500">
 
-    <!-- CABEÇALHO TÁTICO -->
-    <header class="w-full max-w-lg flex justify-between items-center py-3 px-4 bg-tactical-900/90 border border-tactical-700/50 rounded-2xl backdrop-blur-md shadow-lg">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-tactical-amber to-amber-700 flex items-center justify-center text-tactical-950 font-black text-lg shadow-md">
+<body class="min-h-screen flex flex-col justify-between items-center p-3 sm:p-6 transition-colors duration-300">
+
+    <header class="w-full max-w-lg flex items-center justify-between mb-4">
+        <!-- Camada / Overlay exclusiva para a marca no lado esquerdo -->
+        <div class="bg-app-card border border-app rounded-2xl px-3.5 py-2 flex items-center gap-3 shadow-sm">
+            <div class="w-9 h-9 rounded-xl btn-brand flex items-center justify-center text-black text-lg shadow-sm font-bold shrink-0">
                 <i class="fa-solid fa-crosshairs"></i>
             </div>
             <div>
-                <h1 class="font-extrabold text-base tracking-wider uppercase text-slate-100 font-mono">POMODORO</h1>
-                <p class="text-[11px] text-slate-400 font-medium">GERENCIADOR DE FOCO</p>
+                <h1 id="appHeaderTitle" class="font-mono font-extrabold text-base tracking-wider leading-none">POMODORO</h1>
+                <span class="text-[9px] text-app-muted uppercase font-bold tracking-wider block mt-0.5">GERENCIADOR DE FOCO</span>
             </div>
         </div>
-        
-        <div class="flex items-center gap-2">
-            <button id="btnStats" onclick="toggleStatsModal()" class="w-10 h-10 bg-tactical-800 hover:bg-tactical-700 text-slate-300 hover:text-white rounded-xl border border-tactical-700/60 transition-all flex items-center justify-center active:scale-95" title="Estatísticas">
+
+        <div class="flex items-center gap-1.5">
+            <!-- Botão de Temas -->
+            <button onclick="openThemeModal()" title="Escolher Tema Visual" class="w-9 h-9 bg-app-card hover:bg-app-element border border-app rounded-xl flex items-center justify-center text-app-muted hover:text-brand transition-all active:scale-95 shadow-sm">
+                <i class="fa-solid fa-palette text-sm"></i>
+            </button>
+            
+            <!-- Botão de Estatísticas -->
+            <button onclick="openStatsModal()" title="Estatísticas de Foco" class="w-9 h-9 bg-app-card hover:bg-app-element border border-app rounded-xl flex items-center justify-center text-app-muted hover:text-brand transition-all active:scale-95 shadow-sm">
                 <i class="fa-solid fa-chart-simple text-sm"></i>
             </button>
-            <button id="btnSettings" onclick="openSettings()" class="w-10 h-10 bg-tactical-800 hover:bg-tactical-700 text-slate-300 hover:text-white rounded-xl border border-tactical-700/60 transition-all flex items-center justify-center active:scale-95" title="Configurações">
+
+            <!-- Botão de Configurações -->
+            <button onclick="openSettingsModal()" title="Configurações de Tempo e Modos" class="w-9 h-9 bg-app-card hover:bg-app-element border border-app rounded-xl flex items-center justify-center text-app-muted hover:text-brand transition-all active:scale-95 shadow-sm">
                 <i class="fa-solid fa-sliders text-sm"></i>
             </button>
         </div>
     </header>
 
-    <!-- CONTEÚDO PRINCIPAL DO TIMER -->
-    <main class="w-full max-w-lg flex flex-col items-center my-auto py-4 space-y-5">
-        
-        <!-- Seleção de Modo Tático -->
-        <div class="bg-tactical-900/90 p-1.5 rounded-2xl flex gap-1.5 w-full border border-tactical-700/50 shadow-inner">
-            <button id="modeFocus" onclick="switchMode('focus')" class="flex-1 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 bg-tactical-amber text-tactical-950 shadow-md flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-bolt text-xs"></i> Foco Profundo
-            </button>
-            <button id="modeShort" onclick="switchMode('shortBreak')" class="flex-1 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 text-slate-400 hover:text-white flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-shield-halved text-xs"></i> Pausa Curta
-            </button>
-            <button id="modeLong" onclick="switchMode('longBreak')" class="flex-1 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 text-slate-400 hover:text-white flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-battery-charging text-xs"></i> Recarga Longa
-            </button>
-        </div>
+    <main class="w-full max-w-lg flex-1 flex flex-col justify-center items-center gap-4">
 
-        <!-- DISPLAY CIRCULAR DO CRONÔMETRO -->
-        <div id="timerCard" class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center bg-tactical-900/40 rounded-full border border-tactical-700/30 p-2 shadow-2xl transition-all duration-500 glow-amber">
-            <svg class="w-full h-full transform" viewBox="0 0 100 100">
-                <!-- Círculo guia -->
-                <circle class="text-tactical-800/80" stroke-width="5" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" />
-                <!-- Círculo de progresso preenchido -->
-                <circle id="progressRing" class="progress-ring__circle text-tactical-amber" stroke-width="5" stroke-linecap="round" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" stroke-dasharray="263.89" stroke-dashoffset="0" />
+        <!-- ABAS DE NAVEGAÇÃO DOS MODOS -->
+        <nav class="w-full bg-app-card p-1.5 rounded-2xl border border-app shadow-md flex items-center justify-between gap-1">
+            <button id="btnFocus" onclick="switchMode('focus')" class="flex-1 py-2 px-1 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 min-w-0">
+                <span id="lblModeFocus" class="truncate">Foco Profundo</span>
+            </button>
+            <button id="btnShort" onclick="switchMode('shortBreak')" class="flex-1 py-2 px-1 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 min-w-0 text-app-muted hover:text-main">
+                <span id="lblModeShort" class="truncate">Pausa Curta</span>
+            </button>
+            <button id="btnLong" onclick="switchMode('longBreak')" class="flex-1 py-2 px-1 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 min-w-0 text-app-muted hover:text-main">
+                <span id="lblModeLong" class="truncate">Recarga Longa</span>
+            </button>
+        </nav>
+
+        <!-- TIMER CIRCULAR CENTRAL -->
+        <div class="relative w-64 h-64 sm:w-72 sm:h-72 my-2 flex items-center justify-center">
+            <svg class="w-full h-full" viewBox="0 0 240 240">
+                <circle cx="120" cy="120" r="102" fill="none" class="stroke-app-element" stroke-width="12" />
+                <circle id="progressRing" class="progress-ring-circle" cx="120" cy="120" r="102" fill="none" stroke-width="12" stroke-linecap="round" />
             </svg>
 
-            <!-- Display Central com dígitos digitais estilo painel tático -->
-            <div class="absolute flex flex-col items-center text-center">
-                <span id="timerDisplay" class="text-5xl sm:text-6xl font-extrabold tracking-tighter font-mono text-slate-100 drop-shadow-md">25:00</span>
-                <div class="flex items-center gap-1.5 mt-2 px-3 py-1 rounded-full bg-tactical-800/80 border border-tactical-700/60">
-                    <span id="statusDot" class="w-2 h-2 rounded-full bg-tactical-amber animate-pulse"></span>
-                    <span id="statusLabel" class="text-[10px] uppercase font-bold tracking-widest text-slate-300">FOCO TOTAL ATIVO</span>
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <div id="timeDisplay" class="font-mono text-5xl sm:text-6xl font-extrabold tracking-tight">25:00</div>
+                <div class="mt-2 px-3 py-1 bg-app-element border border-app rounded-full flex items-center gap-1.5">
+                    <span id="modeDot" class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+                    <span id="currentModeDisplay" class="text-[10px] font-bold uppercase tracking-wider text-app-muted">Foco Profundo</span>
                 </div>
             </div>
         </div>
 
-        <!-- PAINEL DE CONTROLE PRINCIPAL (BOTOES) -->
-        <div class="flex items-center gap-3 w-full justify-center">
-            <button id="btnReset" onclick="resetTimer()" class="w-14 h-14 bg-tactical-900 hover:bg-tactical-800 text-slate-400 hover:text-slate-100 rounded-2xl border border-tactical-700/60 transition-all active:scale-95 flex items-center justify-center shadow-lg" title="Reiniciar Sessão">
+        <!-- CONTROLES PRINCIPAIS -->
+        <div class="w-full flex items-center justify-center gap-3">
+            <button onclick="resetTimer()" title="Reiniciar Cronômetro" class="w-12 h-12 bg-app-card hover:bg-app-element border border-app rounded-2xl flex items-center justify-center text-app-muted hover:text-main transition-all active:scale-95 shadow-md">
                 <i class="fa-solid fa-rotate-right text-base"></i>
             </button>
 
-            <button id="btnStart" onclick="toggleTimer()" class="flex-1 py-4 bg-tactical-amber hover:bg-amber-500 text-tactical-950 font-black rounded-2xl shadow-xl text-base tracking-wider uppercase transition-all active:scale-95 flex items-center justify-center gap-2">
-                <i id="startIcon" class="fa-solid fa-play"></i> <span id="startText">INICIAR MISSÃO</span>
+            <button id="btnMainToggle" onclick="toggleTimer()" class="flex-1 max-w-[200px] h-12 btn-brand rounded-2xl font-black text-sm tracking-wider uppercase flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg glow-effect">
+                <i id="mainToggleIcon" class="fa-solid fa-play text-sm"></i>
+                <span id="mainToggleText">INICIAR</span>
             </button>
 
-            <button id="btnSkip" onclick="skipSession()" class="w-14 h-14 bg-tactical-900 hover:bg-tactical-800 text-slate-400 hover:text-slate-100 rounded-2xl border border-tactical-700/60 transition-all active:scale-95 flex items-center justify-center shadow-lg" title="Pular Etapa">
+            <button onclick="skipTimer()" title="Pular para próximo modo" class="w-12 h-12 bg-app-card hover:bg-app-element border border-app rounded-2xl flex items-center justify-center text-app-muted hover:text-main transition-all active:scale-95 shadow-md">
                 <i class="fa-solid fa-forward-step text-base"></i>
             </button>
         </div>
 
-        <!-- CONTROLADOR DE RUÍDO & AUDIO DE FOCO (Sintetizado via Web Audio API) -->
-        <div class="w-full bg-tactical-900/80 p-3.5 rounded-2xl border border-tactical-700/50 shadow-md flex items-center justify-between gap-3">
-            <div class="flex items-center gap-2.5">
-                <div id="ambientIconBg" class="w-8 h-8 rounded-lg bg-tactical-800 flex items-center justify-center text-slate-400">
+        <!-- CONTROLADOR DE SONS AMBIENTE -->
+        <div class="w-full bg-app-card p-3 rounded-2xl border border-app shadow-md flex items-center justify-between gap-2 mt-1">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div id="ambientIconBg" class="w-8 h-8 rounded-xl bg-app-element flex items-center justify-center text-app-muted shrink-0">
                     <i class="fa-solid fa-headphones text-xs"></i>
                 </div>
-                <div>
-                    <div class="text-xs font-bold text-slate-200">Sons</div>
-                    <div id="ambientSoundName" class="text-[10px] text-slate-400">Ruído Marrom (Foco Profundo)</div>
+                <div class="min-w-0">
+                    <div class="text-xs font-extrabold truncate">Sons</div>
+                    <div id="ambientSoundName" class="text-[10px] text-app-muted truncate">Ruído Marrom (Foco Profundo)</div>
                 </div>
             </div>
 
-            <div class="flex items-center gap-2">
-                <select id="soundTypeSelect" onchange="changeSoundType()" class="bg-tactical-800 text-slate-200 text-xs border border-tactical-700 rounded-xl px-2 py-1.5 focus:outline-none">
+            <div class="flex items-center gap-1.5 shrink-0">
+                <select id="soundTypeSelect" onchange="changeSoundType()" class="bg-app-element text-xs font-semibold border border-app rounded-xl px-2 py-1.5 focus:outline-none cursor-pointer">
                     <option value="brown">Ruído Marrom</option>
                     <option value="rain">Chuva Suave</option>
+                    <option value="lofiBeat">🥁 Lo-Fi Boom Bap (Beat)</option>
+                    <option value="lofiGroove">🎧 Lo-Fi Chillhop (Animado)</option>
+                    <option value="lofiElectro">⚡ Lo-Fi House (Energia)</option>
+                    <option value="lofi">Lo-Fi Chiado & Acordes</option>
+                    <option value="lofiChords">Lo-Fi Harmonia Piano</option>
+                    <option value="waves">Ondas do Mar</option>
                 </select>
-                <button id="btnAmbient" onclick="toggleAmbientSound()" class="px-3 py-1.5 bg-tactical-800 hover:bg-tactical-700 border border-tactical-700 rounded-xl text-xs font-bold text-slate-200 transition-all flex items-center gap-1.5 active:scale-95">
-                    <i id="ambientIcon" class="fa-solid fa-play text-[10px]"></i> <span id="ambientStateText">Ligar</span>
+                <button id="btnAmbient" onclick="toggleAmbientSound()" class="px-3 py-1.5 bg-app-element hover:bg-app-card border border-app rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 active:scale-95">
+                    <i id="ambientIcon" class="fa-solid fa-play text-[10px]"></i>
+                    <span id="ambientStateText">Ligar</span>
                 </button>
+            </div>
+        </div>
+
+        <!-- PAINEL DE OBJETIVOS -->
+        <div class="w-full bg-app-card p-3.5 rounded-2xl border border-app shadow-md flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-brand text-xs"></i>
+                    <span class="text-xs font-extrabold uppercase tracking-wider">OBJETIVOS</span>
+                </div>
+                <span id="tasksCounter" class="text-[10px] font-bold text-app-muted bg-app-element px-2 py-0.5 rounded-md">CONCLUÍDAS: 0/0</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <input type="text" id="inputNewTask" placeholder="Ex: Analisar relatório, Ler 20 pag... " onkeypress="if(event.key==='Enter') addTask()" class="flex-1 min-w-0 bg-app-element text-xs border border-app rounded-xl px-3 py-2 focus:outline-none focus:border-brand transition-all">
+                
+                <select id="selectPriority" class="bg-app-element text-xs border border-app rounded-xl px-2.5 py-2 focus:outline-none shrink-0 font-medium cursor-pointer">
+                    <option value="media">🟡 Média</option>
+                    <option value="alta">🔴 Alta</option>
+                    <option value="baixa">🟢 Baixa</option>
+                </select>
+
+                <button onclick="addTask()" class="w-9 h-9 btn-brand rounded-xl flex items-center justify-center font-bold shrink-0 transition-all active:scale-95 shadow-sm">
+                    <i class="fa-solid fa-plus text-xs"></i>
+                </button>
+            </div>
+
+            <div id="tasksList" class="flex flex-col gap-2 max-h-40 overflow-y-auto pr-1">
+                <div class="text-center text-[11px] text-app-muted py-3">Nenhum objetivo definido. Adicione acima para iniciar!</div>
             </div>
         </div>
 
     </main>
 
-    <!-- GERENCIADOR DE MISSÕES E OBJETIVOS DA SESSÃO -->
-    <section class="w-full max-w-lg bg-tactical-900/90 p-4 rounded-2xl border border-tactical-700/50 shadow-xl mb-3 space-y-3">
-        
-        <div class="flex items-center justify-between pb-2 border-b border-tactical-800">
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-list-check text-tactical-amber text-sm"></i>
-                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-200">Objetivos</h2>
+    <footer class="mt-4 text-center">
+        <p class="text-[10px] text-app-muted font-medium">Pomodoro Executive &bull; Alta Performance com Foco & Som Ambient</p>
+    </footer>
+
+    <!-- MODAL DE GALERIA DE TEMAS VISUAIS -->
+    <div id="themeModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-app-card w-full max-w-sm rounded-3xl border border-app p-5 shadow-2xl flex flex-col gap-4">
+            <div class="flex items-center justify-between border-b border-app pb-3">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-palette text-brand"></i>
+                    <h2 class="font-extrabold text-sm uppercase tracking-wide">Galeria de Temas</h2>
+                </div>
+                <button onclick="closeThemeModal()" class="text-app-muted hover:text-main text-sm p-1"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="flex items-center gap-1 text-xs font-mono font-bold text-slate-400">
-                <span>CONCLUÍDAS:</span>
-                <span id="taskCompletedRatio" class="text-tactical-amber">0/0</span>
+
+            <div class="grid grid-cols-1 gap-2.5 max-h-80 overflow-y-auto pr-1">
+                <button onclick="setTheme('theme-amber')" class="p-3 bg-app-element hover:bg-app-card border border-app rounded-2xl flex items-center justify-between text-left transition-all active:scale-95">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-4 h-4 rounded-full bg-amber-500 inline-block shadow-sm"></span>
+                        <span class="text-xs font-bold">Tático Âmbar (Padrão)</span>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-brand opacity-0" id="check-theme-amber"></i>
+                </button>
+
+                <button onclick="setTheme('theme-orange')" class="p-3 bg-app-element hover:bg-app-card border border-app rounded-2xl flex items-center justify-between text-left transition-all active:scale-95">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-4 h-4 rounded-full bg-orange-500 inline-block shadow-sm"></span>
+                        <span class="text-xs font-bold">Laranja Tático</span>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-brand opacity-0" id="check-theme-orange"></i>
+                </button>
+
+                <button onclick="setTheme('theme-blue-orange')" class="p-3 bg-app-element hover:bg-app-card border border-app rounded-2xl flex items-center justify-between text-left transition-all active:scale-95">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-4 h-4 rounded-full bg-blue-500 inline-block shadow-sm"></span>
+                        <span class="text-xs font-bold">Azul Destaque</span>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-brand opacity-0" id="check-theme-blue-orange"></i>
+                </button>
+
+                <button onclick="setTheme('theme-purple')" class="p-3 bg-app-element hover:bg-app-card border border-app rounded-2xl flex items-center justify-between text-left transition-all active:scale-95">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-4 h-4 rounded-full bg-purple-500 inline-block shadow-sm"></span>
+                        <span class="text-xs font-bold">Roxo Neon</span>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-brand opacity-0" id="check-theme-purple"></i>
+                </button>
+
+                <button onclick="setTheme('theme-cyan')" class="p-3 bg-app-element hover:bg-app-card border border-app rounded-2xl flex items-center justify-between text-left transition-all active:scale-95">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-4 h-4 rounded-full bg-cyan-400 inline-block shadow-sm"></span>
+                        <span class="text-xs font-bold">Ciano Cyber</span>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-brand opacity-0" id="check-theme-cyan"></i>
+                </button>
+
+                <button onclick="setTheme('theme-emerald')" class="p-3 bg-app-element hover:bg-app-card border border-app rounded-2xl flex items-center justify-between text-left transition-all active:scale-95">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-4 h-4 rounded-full bg-emerald-500 inline-block shadow-sm"></span>
+                        <span class="text-xs font-bold">Esmeralda Foco</span>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-brand opacity-0" id="check-theme-emerald"></i>
+                </button>
+
+                <button onclick="setTheme('theme-light')" class="p-3 bg-slate-200 border border-slate-300 text-slate-900 rounded-2xl flex items-center justify-between text-left transition-all active:scale-95">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-4 h-4 rounded-full bg-blue-600 inline-block shadow-sm"></span>
+                        <span class="text-xs font-bold">Modo Claro (Off-White)</span>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-blue-600 opacity-0" id="check-theme-light"></i>
+                </button>
             </div>
         </div>
+    </div>
 
-        <!-- Formulário de Inserção de Tarefa -->
-        <form id="taskForm" onsubmit="addTask(event)" class="flex gap-2">
-            <input type="text" id="taskInput" placeholder="Ex: Analisar relatório, Ler 20 paginas..." class="flex-1 bg-tactical-950 border border-tactical-700 rounded-xl px-3 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-tactical-amber transition-all" required>
-            
-            <select id="taskPriority" class="bg-tactical-950 border border-tactical-700 rounded-xl px-2 py-2 text-xs text-slate-300 focus:outline-none">
-                <option value="Alta">🔴 Alta</option>
-                <option value="Média" selected>🟡 Média</option>
-                <option value="Baixa">🟢 Baixa</option>
-            </select>
+    <!-- MODAL DE CONFIGURAÇÕES DE TEMPOS E NOMES -->
+    <div id="settingsModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-app-card w-full max-w-md rounded-3xl border border-app p-5 shadow-2xl flex flex-col gap-4">
+            <div class="flex items-center justify-between border-b border-app pb-3">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-brand"></i>
+                    <h2 class="font-extrabold text-sm uppercase tracking-wide">Configurações de Sessão</h2>
+                </div>
+                <button onclick="closeSettingsModal()" class="text-app-muted hover:text-main text-sm p-1"><i class="fa-solid fa-xmark"></i></button>
+            </div>
 
-            <button type="submit" class="bg-tactical-amber hover:bg-amber-500 text-tactical-950 font-bold px-3.5 py-2 rounded-xl text-xs transition-all active:scale-95">
-                <i class="fa-solid fa-plus"></i>
-            </button>
-        </form>
+            <div class="flex flex-col gap-4 max-h-[70vh] overflow-y-auto pr-1">
+                <div>
+                    <label class="text-[11px] font-extrabold text-app-muted uppercase tracking-wider block mb-2">Duração das Sessões (Minutos)</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div>
+                            <span class="text-[10px] text-app-muted block mb-1 font-semibold">Foco</span>
+                            <input type="number" id="cfgFocusTime" min="1" max="120" class="w-full bg-app-element border border-app rounded-xl px-2.5 py-2 text-xs font-bold text-center focus:outline-none focus:border-brand">
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-app-muted block mb-1 font-semibold">Pausa Curta</span>
+                            <input type="number" id="cfgShortBreakTime" min="1" max="60" class="w-full bg-app-element border border-app rounded-xl px-2.5 py-2 text-xs font-bold text-center focus:outline-none focus:border-brand">
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-app-muted block mb-1 font-semibold">Recarga</span>
+                            <input type="number" id="cfgLongBreakTime" min="1" max="90" class="w-full bg-app-element border border-app rounded-xl px-2.5 py-2 text-xs font-bold text-center focus:outline-none focus:border-brand">
+                        </div>
+                    </div>
+                </div>
 
-        <!-- Lista de Objetivos -->
-        <ul id="taskList" class="space-y-2 max-h-40 overflow-y-auto pr-1">
-            <!-- Inserido dinamicamente via JS -->
-        </ul>
-    </section>
+                <div>
+                    <label class="text-[11px] font-extrabold text-app-muted uppercase tracking-wider block mb-2">Nomes Personalizados dos Modos</label>
+                    <div class="flex flex-col gap-2">
+                        <div>
+                            <span class="text-[10px] text-app-muted block mb-0.5">Modo Foco</span>
+                            <input type="text" id="cfgNameFocus" placeholder="Ex: Valorant 123, Foco Total..." class="w-full bg-app-element border border-app rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-brand">
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-app-muted block mb-0.5">Pausa Curta</span>
+                            <input type="text" id="cfgNameShort" placeholder="Ex: Café, Descanso Rápido..." class="w-full bg-app-element border border-app rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-brand">
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-app-muted block mb-0.5">Recarga Longa</span>
+                            <input type="text" id="cfgNameLong" placeholder="Ex: Almoço, Caminhada..." class="w-full bg-app-element border border-app rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-brand">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-2 pt-2 border-t border-app">
+                <button onclick="closeSettingsModal()" class="px-4 py-2 bg-app-element hover:bg-app-card border border-app rounded-xl text-xs font-bold transition-all">Cancelar</button>
+                <button onclick="saveSettings()" class="px-4 py-2 btn-brand rounded-xl text-xs font-black uppercase transition-all shadow-md active:scale-95">Salvar Tudo</button>
+            </div>
+        </div>
+    </div>
 
     <!-- MODAL DE ESTATÍSTICAS -->
-    <div id="statsModal" class="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300 z-50">
-        <div class="bg-tactical-900 border border-tactical-700 rounded-3xl w-full max-w-sm p-5 shadow-2xl transform scale-95 transition-transform duration-300" id="statsModalBox">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="font-extrabold text-sm uppercase tracking-wider text-white flex items-center gap-2 font-mono">
-                    <i class="fa-solid fa-chart-line text-tactical-amber"></i> Desempenho Operacional
-                </h3>
-                <button onclick="toggleStatsModal()" class="text-slate-400 hover:text-white p-1">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
+    <div id="statsModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-app-card w-full max-w-sm rounded-3xl border border-app p-5 shadow-2xl flex flex-col gap-4">
+            <div class="flex items-center justify-between border-b border-app pb-3">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-chart-line text-brand"></i>
+                    <h2 class="font-extrabold text-sm uppercase tracking-wide">Desempenho Diário</h2>
+                </div>
+                <button onclick="closeStatsModal()" class="text-app-muted hover:text-main text-sm p-1"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <div class="grid grid-cols-2 gap-3 mb-4">
-                <div class="bg-tactical-950 p-3 rounded-2xl border border-tactical-800 text-center">
-                    <div class="text-[10px] uppercase font-semibold text-slate-400">Pomodoros Hoje</div>
-                    <div id="statTodayCount" class="text-2xl font-black font-mono text-tactical-amber mt-1">0</div>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-app-element p-3.5 rounded-2xl border border-app text-center">
+                    <span id="statPomodoros" class="block font-mono text-3xl font-extrabold text-brand">0</span>
+                    <span class="text-[10px] text-app-muted font-bold uppercase tracking-wider">Ciclos Concluídos</span>
                 </div>
-                <div class="bg-tactical-950 p-3 rounded-2xl border border-tactical-800 text-center">
-                    <div class="text-[10px] uppercase font-semibold text-slate-400">Horas de Foco</div>
-                    <div id="statTotalHours" class="text-2xl font-black font-mono text-slate-100 mt-1">0.0h</div>
-                </div>
-            </div>
-
-            <div class="bg-tactical-950 p-3 rounded-2xl border border-tactical-800 mb-4">
-                <div class="flex justify-between text-xs mb-1">
-                    <span class="text-slate-400">Meta Diária (4 Pomodoros)</span>
-                    <span id="statGoalPercent" class="font-bold text-tactical-amber">0%</span>
-                </div>
-                <div class="w-full bg-tactical-800 rounded-full h-2 overflow-hidden">
-                    <div id="statGoalBar" class="bg-tactical-amber h-full transition-all duration-500" style="width: 0%"></div>
+                <div class="bg-app-element p-3.5 rounded-2xl border border-app text-center">
+                    <span id="statMinutes" class="block font-mono text-3xl font-extrabold text-brand">0m</span>
+                    <span class="text-[10px] text-app-muted font-bold uppercase tracking-wider">Tempo Focado</span>
                 </div>
             </div>
 
-            <button onclick="toggleStatsModal()" class="w-full py-2.5 bg-tactical-800 hover:bg-tactical-700 text-slate-200 rounded-xl text-xs font-bold transition-all">
-                Fechar Painel
-            </button>
+            <button onclick="resetStats()" class="w-full py-2 bg-app-element hover:bg-red-500/10 text-red-400 border border-red-500/20 rounded-xl text-xs font-bold transition-all">Limpar Estatísticas</button>
         </div>
     </div>
 
-    <!-- MODAL DE CONFIGURAÇÕES -->
-    <div id="settingsModal" class="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300 z-50">
-        <div class="bg-tactical-900 border border-tactical-700 rounded-3xl w-full max-w-sm p-5 shadow-2xl transform scale-95 transition-transform duration-300" id="settingsModalBox">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="font-extrabold text-sm uppercase tracking-wider text-white flex items-center gap-2 font-mono">
-                    <i class="fa-solid fa-sliders text-tactical-amber"></i> Ajustes de Sessão
-                </h3>
-                <button onclick="closeSettings()" class="text-slate-400 hover:text-white p-1">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
-
-            <div class="space-y-3.5">
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Foco Profundo (minutos)</label>
-                    <input type="number" id="inputFocus" min="1" max="90" value="25" class="w-full bg-tactical-950 border border-tactical-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-tactical-amber font-mono">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Pausa Curta (minutos)</label>
-                    <input type="number" id="inputShort" min="1" max="30" value="5" class="w-full bg-tactical-950 border border-tactical-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-tactical-amber font-mono">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Recarga Longa (minutos)</label>
-                    <input type="number" id="inputLong" min="1" max="60" value="15" class="w-full bg-tactical-950 border border-tactical-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-tactical-amber font-mono">
-                </div>
-                <div class="pt-2 border-t border-tactical-800 flex items-center justify-between">
-                    <span class="text-xs font-bold text-slate-300">Vibração Hática no Celular</span>
-                    <input type="checkbox" id="inputHaptics" checked class="accent-tactical-amber w-4 h-4 rounded">
-                </div>
-            </div>
-
-            <div class="mt-5 flex justify-end gap-2">
-                <button onclick="closeSettings()" class="px-3.5 py-2 bg-tactical-800 text-slate-300 rounded-xl text-xs font-bold hover:bg-tactical-700 transition-all">Cancelar</button>
-                <button onclick="saveSettings()" class="px-4 py-2 bg-tactical-amber text-tactical-950 rounded-xl text-xs font-extrabold hover:bg-amber-500 transition-all shadow-md">Salvar Ajustes</button>
-            </div>
-        </div>
+    <!-- TOAST DE NOTIFICAÇÃO -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-app-card border border-brand/50 text-main px-4 py-2.5 rounded-2xl shadow-2xl flex items-center gap-2.5 transition-all duration-300 opacity-0 translate-y-20 pointer-events-none z-50">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-brand"></i>
+        <span id="toastMsg" class="text-xs font-bold">Configurações salvas!</span>
     </div>
 
-    <!-- NOTIFICAÇÃO TOAST CUSTOMIZADA -->
-    <div id="toast" class="fixed bottom-6 bg-tactical-900 border border-tactical-700 text-slate-100 px-4 py-3 rounded-2xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-3 z-50">
-        <i class="fa-solid fa-circle-check text-tactical-amber text-lg" id="toastIcon"></i>
-        <span id="toastMsg" class="text-xs font-bold">Notificação</span>
-    </div>
-
-    <!-- MOTOR EM JAVASCRIPT -->
     <script>
-        // CONFIGURAÇÕES PADRÃO DE TEMPO (em segundos)
+        // CONFIGURAÇÃO GLOBAL & DEFAULTS
         let config = {
             focus: 25 * 60,
             shortBreak: 5 * 60,
             longBreak: 15 * 60,
-            enableHaptics: true
+            nameFocus: 'Foco Profundo',
+            nameShort: 'Pausa Curta',
+            nameLong: 'Recarga Longa',
+            theme: 'theme-amber'
         };
 
-        // ESTADO GLOBAL DA APLICAÇÃO
-        let currentMode = 'focus'; // 'focus', 'shortBreak', 'longBreak'
+        // ESTADO GLOBAL
+        let currentMode = 'focus'; 
         let timeLeft = config.focus;
         let totalTime = config.focus;
         let timerInterval = null;
@@ -321,178 +524,152 @@
         let completedPomodorosToday = 0;
         let totalMinutesFocused = 0;
         let tasks = [];
-        
-        // MOTOR DE ÁUDIO WEB AUDIO API
+
+        // AUDIO CONTEXT & SINTETIZADOR
         let audioCtx = null;
         let ambientNoiseNode = null;
         let ambientGainNode = null;
         let isAmbientPlaying = false;
         let currentSoundType = 'brown';
+        let lofiTimer = null;
+        let beatInterval = null;
 
-        // REFERÊNCIAS DO DOM
-        const timerDisplay = document.getElementById('timerDisplay');
-        const statusLabel = document.getElementById('statusLabel');
-        const statusDot = document.getElementById('statusDot');
-        const progressRing = document.getElementById('progressRing');
-        const btnStart = document.getElementById('btnStart');
-        const startIcon = document.getElementById('startIcon');
-        const startText = document.getElementById('startText');
-        const taskList = document.getElementById('taskList');
-        const taskCompletedRatio = document.getElementById('taskCompletedRatio');
-        const timerCard = document.getElementById('timerCard');
-        const circumference = 2 * Math.PI * 42;
+        const CIRCUMFERENCE = 2 * Math.PI * 102; // Raio do Círculo
 
-        // GERADOR DE SOM SINTETIZADO E SINAIS TÁTICOS
-        function playTacticalSound(type) {
-            try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') audioCtx.resume();
+        // INITIALIZATION
+        window.onload = function () {
+            loadData();
+            setupProgressRing();
+            applyTheme(config.theme);
+            updateLabels();
+            updateDisplay();
+            renderTasks();
+            updateStatsDisplay();
+        };
 
-                if (type === 'click') {
-                    // Clique mecânico sutil
-                    const osc = audioCtx.createOscillator();
-                    const gain = audioCtx.createGain();
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(120, audioCtx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.04);
-                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
-                    osc.connect(gain);
-                    gain.connect(audioCtx.destination);
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + 0.04);
-                } else if (type === 'alarm') {
-                    // Alarme tático de finalização de missão
-                    const notes = [440, 554.37, 659.25, 880];
-                    notes.forEach((freq, idx) => {
-                        const osc = audioCtx.createOscillator();
-                        const gain = audioCtx.createGain();
-                        osc.type = 'sine';
-                        osc.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.12);
-                        gain.gain.setValueAtTime(0.2, audioCtx.currentTime + idx * 0.12);
-                        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + idx * 0.12 + 0.4);
-                        osc.connect(gain);
-                        gain.connect(audioCtx.destination);
-                        osc.start(audioCtx.currentTime + idx * 0.12);
-                        osc.stop(audioCtx.currentTime + idx * 0.12 + 0.4);
-                    });
+        function setupProgressRing() {
+            const ring = document.getElementById('progressRing');
+            if (ring) {
+                ring.style.strokeDasharray = `${CIRCUMFERENCE} ${CIRCUMFERENCE}`;
+                ring.style.strokeDashoffset = '0';
+            }
+        }
+
+        // PERSISTÊNCIA EM LOCALSTORAGE
+        function saveData() {
+            const payload = {
+                config: config,
+                completedPomodorosToday: completedPomodorosToday,
+                totalMinutesFocused: totalMinutesFocused,
+                tasks: tasks
+            };
+            localStorage.setItem('pomodoro_exec_data_v3', JSON.stringify(payload));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem('pomodoro_exec_data_v3');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    if (parsed.config) config = { ...config, ...parsed.config };
+                    if (parsed.completedPomodorosToday) completedPomodorosToday = parsed.completedPomodorosToday;
+                    if (parsed.totalMinutesFocused) totalMinutesFocused = parsed.totalMinutesFocused;
+                    if (parsed.tasks) tasks = parsed.tasks;
+                } catch(e) {
+                    console.error("Erro ao carregar dados salvos:", e);
                 }
-            } catch (e) {
-                console.log("Audio Error:", e);
             }
-
-            // Vibração Hática em Dispositivos Móveis (Android/iOS PWA)
-            if (config.enableHaptics && window.navigator && window.navigator.vibrate) {
-                if (type === 'click') window.navigator.vibrate(20);
-                if (type === 'alarm') window.navigator.vibrate([100, 50, 100, 50, 200]);
-            }
+            timeLeft = config[currentMode];
+            totalTime = config[currentMode];
         }
 
-        // GERADOR DE RUÍDO DE FOCO (Brownian / Rain)
-        function toggleAmbientSound() {
-            playTacticalSound('click');
-            if (isAmbientPlaying) {
-                stopAmbientSound();
-            } else {
-                startAmbientSound();
-            }
+        // GERENCIAMENTO DE TEMAS
+        function openThemeModal() {
+            document.getElementById('themeModal').classList.remove('hidden');
+            updateThemeCheckmarks();
         }
 
-        function changeSoundType() {
-            currentSoundType = document.getElementById('soundTypeSelect').value;
-            const soundNames = { brown: 'Ruído Marrom (Foco Profundo)', rain: 'Chuva Suave de Foco' };
-            document.getElementById('ambientSoundName').textContent = soundNames[currentSoundType];
-            
-            if (isAmbientPlaying) {
-                stopAmbientSound();
-                startAmbientSound();
-            }
+        function closeThemeModal() {
+            document.getElementById('themeModal').classList.add('hidden');
         }
 
-        function startAmbientSound() {
-            try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') audioCtx.resume();
+        function setTheme(themeClass) {
+            config.theme = themeClass;
+            applyTheme(themeClass);
+            saveData();
+            updateThemeCheckmarks();
+            showToast("Tema Visual Atualizado", "fa-palette");
+        }
 
-                const bufferSize = audioCtx.sampleRate * 2;
-                const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-                const output = noiseBuffer.getChannelData(0);
+        function applyTheme(themeClass) {
+            document.body.className = "min-h-screen flex flex-col justify-between items-center p-3 sm:p-6 transition-colors duration-300 " + themeClass;
+        }
 
-                if (currentSoundType === 'brown') {
-                    // Algoritmo de Ruído Marrom (Brown Noise) - frequência grave relaxante
-                    let lastOut = 0.0;
-                    for (let i = 0; i < bufferSize; i++) {
-                        let white = Math.random() * 2 - 1;
-                        output[i] = (lastOut + (0.02 * white)) / 1.02;
-                        lastOut = output[i];
-                        output[i] *= 0.12; // Volume ajustado para conforto
-                    }
-                } else {
-                    // Chuva suave mascarada
-                    let b0 = 0, b1 = 0, b2 = 0;
-                    for (let i = 0; i < bufferSize; i++) {
-                        let white = Math.random() * 2 - 1;
-                        b0 = 0.99 * b0 + white * 0.05;
-                        b1 = 0.96 * b1 + white * 0.1;
-                        output[i] = b0 + b1 + white * 0.1;
-                        output[i] *= 0.04;
+        function updateThemeCheckmarks() {
+            ['amber', 'orange', 'blue-orange', 'purple', 'cyan', 'emerald', 'light'].forEach(t => {
+                const el = document.getElementById(`check-theme-${t}`);
+                if (el) {
+                    if (config.theme === `theme-${t}`) {
+                        el.classList.remove('opacity-0');
+                    } else {
+                        el.classList.add('opacity-0');
                     }
                 }
-
-                ambientNoiseNode = audioCtx.createBufferSource();
-                ambientNoiseNode.buffer = noiseBuffer;
-                ambientNoiseNode.loop = true;
-
-                ambientGainNode = audioCtx.createGain();
-                ambientGainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
-
-                ambientNoiseNode.connect(ambientGainNode);
-                ambientGainNode.connect(audioCtx.destination);
-                ambientNoiseNode.start();
-
-                isAmbientPlaying = true;
-                document.getElementById('ambientStateText').textContent = "Pausar";
-                document.getElementById('ambientIcon').className = "fa-solid fa-pause text-[10px]";
-                document.getElementById('ambientIconBg').className = "w-8 h-8 rounded-lg bg-tactical-amber/20 text-tactical-amber flex items-center justify-center";
-                showToast("Sons de Foco Ativados", "fa-headphones");
-            } catch (e) {
-                console.log(e);
-            }
+            });
         }
 
-        function stopAmbientSound() {
-            if (ambientNoiseNode) {
-                ambientNoiseNode.stop();
-                ambientNoiseNode = null;
-            }
-            isAmbientPlaying = false;
-            document.getElementById('ambientStateText').textContent = "Ligar";
-            document.getElementById('ambientIcon').className = "fa-solid fa-play text-[10px]";
-            document.getElementById('ambientIconBg').className = "w-8 h-8 rounded-lg bg-tactical-800 text-slate-400 flex items-center justify-center";
+        function switchMode(mode) {
+            if (isRunning) pauseTimer();
+            currentMode = mode;
+            timeLeft = config[mode];
+            totalTime = config[mode];
+
+            const btnFocus = document.getElementById('btnFocus');
+            const btnShort = document.getElementById('btnShort');
+            const btnLong = document.getElementById('btnLong');
+
+            [btnFocus, btnShort, btnLong].forEach(btn => {
+                btn.className = "flex-1 py-2 px-1 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 min-w-0 text-app-muted hover:text-main";
+            });
+
+            if (mode === 'focus') btnFocus.className = "flex-1 py-2 px-1 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 min-w-0 bg-app-element text-brand border border-app shadow-sm";
+            if (mode === 'shortBreak') btnShort.className = "flex-1 py-2 px-1 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 min-w-0 bg-app-element text-brand border border-app shadow-sm";
+            if (mode === 'longBreak') btnLong.className = "flex-1 py-2 px-1 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 min-w-0 bg-app-element text-brand border border-app shadow-sm";
+
+            updateDisplay();
         }
 
-        // CONTROLE DO CRONÔMETRO DE FOCO
+        function updateLabels() {
+            document.getElementById('lblModeFocus').textContent = config.nameFocus || 'Foco Profundo';
+            document.getElementById('lblModeShort').textContent = config.nameShort || 'Pausa Curta';
+            document.getElementById('lblModeLong').textContent = config.nameLong || 'Recarga Longa';
+            updateDisplay();
+        }
+
         function updateDisplay() {
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
             const formatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
             
-            timerDisplay.textContent = formatted;
-            document.title = `${formatted} - ${getStatusTitle()}`;
+            document.getElementById('timeDisplay').textContent = formatted;
 
-            // Atualização do Anel
-            const offset = circumference - (timeLeft / totalTime) * circumference;
-            progressRing.style.strokeDashoffset = offset;
-        }
+            let modeText = config.nameFocus;
+            if (currentMode === 'shortBreak') modeText = config.nameShort;
+            if (currentMode === 'longBreak') modeText = config.nameLong;
 
-        function getStatusTitle() {
-            if (currentMode === 'focus') return 'Foco Profundo';
-            if (currentMode === 'shortBreak') return 'Pausa Curta';
-            return 'Recarga Longa';
+            document.getElementById('currentModeDisplay').textContent = modeText;
+            document.title = `${formatted} - ${modeText}`;
+
+            // Atualizar Anel de Progresso
+            const ring = document.getElementById('progressRing');
+            if (ring && totalTime > 0) {
+                const fraction = timeLeft / totalTime;
+                const offset = CIRCUMFERENCE - (fraction * CIRCUMFERENCE);
+                ring.style.strokeDashoffset = offset;
+            }
         }
 
         function toggleTimer() {
-            playTacticalSound('click');
             if (isRunning) {
                 pauseTimer();
             } else {
@@ -501,16 +678,13 @@
         }
 
         function startTimer() {
-            if (isRunning) return;
             isRunning = true;
-
-            startIcon.className = "fa-solid fa-pause";
-            startText.textContent = "PAUSAR";
+            document.getElementById('mainToggleText').textContent = "PAUSAR";
+            document.getElementById('mainToggleIcon').className = "fa-solid fa-pause text-sm";
 
             timerInterval = setInterval(() => {
                 if (timeLeft > 0) {
                     timeLeft--;
-                    if (currentMode === 'focus') totalMinutesFocused += 1 / 60;
                     updateDisplay();
                 } else {
                     onTimerComplete();
@@ -521,241 +695,616 @@
         function pauseTimer() {
             isRunning = false;
             clearInterval(timerInterval);
-            startIcon.className = "fa-solid fa-play";
-            startText.textContent = isRunning ? "PAUSAR" : "CONTINUAR";
+            document.getElementById('mainToggleText').textContent = "CONTINUAR";
+            document.getElementById('mainToggleIcon').className = "fa-solid fa-play text-sm";
         }
 
         function resetTimer() {
-            playTacticalSound('click');
             pauseTimer();
             timeLeft = config[currentMode];
-            totalTime = config[currentMode];
-            startText.textContent = "INICIAR MISSÃO";
+            document.getElementById('mainToggleText').textContent = "INICIAR";
             updateDisplay();
+            showToast("Cronômetro Reiniciado", "fa-rotate-right");
         }
 
-        function onTimerComplete() {
+        function skipTimer() {
             pauseTimer();
-            playTacticalSound('alarm');
-
-            if (currentMode === 'focus') {
-                completedPomodorosToday++;
-                saveStats();
-                showToast("Missão Cumprida! Descanse alguns minutos.", "fa-trophy");
-                
-                if (completedPomodorosToday % 4 === 0) {
-                    switchMode('longBreak');
-                } else {
-                    switchMode('shortBreak');
-                }
-            } else {
-                showToast("Pausa concluída. Hora de voltar à ação!", "fa-bolt");
-                switchMode('focus');
-            }
-        }
-
-        function skipSession() {
-            playTacticalSound('click');
-            pauseTimer();
-            showToast("Etapa Avançada.", "fa-forward");
             if (currentMode === 'focus') {
                 switchMode('shortBreak');
             } else {
                 switchMode('focus');
             }
+            showToast("Sessão Avançada", "fa-forward-step");
         }
 
-        // ALTERNÂNCIA DE MODOS TÁTICOS
-        function switchMode(mode) {
+        function onTimerComplete() {
             pauseTimer();
-            currentMode = mode;
-            timeLeft = config[mode];
-            totalTime = config[mode];
+            playNotificationSound();
 
-            const btnFocus = document.getElementById('modeFocus');
-            const btnShort = document.getElementById('modeShort');
-            const btnLong = document.getElementById('modeLong');
-
-            // Resetar estilos
-            [btnFocus, btnShort, btnLong].forEach(btn => {
-                btn.className = "flex-1 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 text-slate-400 hover:text-white flex items-center justify-center gap-1.5";
-            });
-
-            if (mode === 'focus') {
-                btnFocus.className = "flex-1 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 bg-tactical-amber text-tactical-950 shadow-md flex items-center justify-center gap-1.5";
-                statusLabel.textContent = "FOCO TOTAL ATIVO";
-                statusDot.className = "w-2 h-2 rounded-full bg-tactical-amber animate-pulse";
-                progressRing.className.baseVal = "progress-ring__circle text-tactical-amber";
-                btnStart.className = "flex-1 py-4 bg-tactical-amber hover:bg-amber-500 text-tactical-950 font-black rounded-2xl shadow-xl text-base tracking-wider uppercase transition-all active:scale-95 flex items-center justify-center gap-2";
-                timerCard.className = "relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center bg-tactical-900/40 rounded-full border border-tactical-700/30 p-2 shadow-2xl transition-all duration-500 glow-amber";
-            } else if (mode === 'shortBreak') {
-                btnShort.className = "flex-1 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 bg-tactical-emerald text-tactical-950 shadow-md flex items-center justify-center gap-1.5";
-                statusLabel.textContent = "PAUSA CURTA DE RECARGA";
-                statusDot.className = "w-2 h-2 rounded-full bg-tactical-emerald animate-pulse";
-                progressRing.className.baseVal = "progress-ring__circle text-tactical-emerald";
-                btnStart.className = "flex-1 py-4 bg-tactical-emerald hover:bg-emerald-500 text-tactical-950 font-black rounded-2xl shadow-xl text-base tracking-wider uppercase transition-all active:scale-95 flex items-center justify-center gap-2";
-                timerCard.className = "relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center bg-tactical-900/40 rounded-full border border-tactical-700/30 p-2 shadow-2xl transition-all duration-500 glow-emerald";
+            if (currentMode === 'focus') {
+                completedPomodorosToday++;
+                totalMinutesFocused += Math.floor(config.focus / 60);
+                saveData();
+                updateStatsDisplay();
+                showToast("Sessão Concluída! Hora de Descansar", "fa-circle-check");
+                switchMode('shortBreak');
             } else {
-                btnLong.className = "flex-1 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 bg-tactical-cyan text-tactical-950 shadow-md flex items-center justify-center gap-1.5";
-                statusLabel.textContent = "RECARGA LONGA OPERACIONAL";
-                statusDot.className = "w-2 h-2 rounded-full bg-tactical-cyan animate-pulse";
-                progressRing.className.baseVal = "progress-ring__circle text-tactical-cyan";
-                btnStart.className = "flex-1 py-4 bg-tactical-cyan hover:bg-cyan-500 text-tactical-950 font-black rounded-2xl shadow-xl text-base tracking-wider uppercase transition-all active:scale-95 flex items-center justify-center gap-2";
-                timerCard.className = "relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center bg-tactical-900/40 rounded-full border border-tactical-700/30 p-2 shadow-2xl transition-all duration-500 glow-cyan";
+                showToast("Descanso Finalizado! Vamos Focar?", "fa-bolt");
+                switchMode('focus');
+            }
+        }
+
+        function changeSoundType() {
+            currentSoundType = document.getElementById('soundTypeSelect').value;
+            const soundNames = { 
+                brown: 'Ruído Marrom (Foco Profundo)', 
+                rain: 'Chuva Suave de Foco',
+                lofiBeat: 'Lo-Fi Boom Bap (Bateria & Sub-Bass)',
+                lofiGroove: 'Lo-Fi Chillhop (Ritmo & Groove)',
+                lofiElectro: 'Lo-Fi House (Energia Constante)',
+                lofi: 'Lo-Fi Beat & Vinil',
+                lofiChords: 'Lo-Fi Harmonia de Piano',
+                waves: 'Ondas Relaxantes do Mar'
+            };
+            document.getElementById('ambientSoundName').textContent = soundNames[currentSoundType] || 'Som de Foco';
+            
+            if (isAmbientPlaying) {
+                stopAmbientSound();
+                startAmbientSound();
+            }
+        }
+
+        function toggleAmbientSound() {
+            if (isAmbientPlaying) {
+                stopAmbientSound();
+            } else {
+                startAmbientSound();
+            }
+        }
+
+        function playKickSound(time, intensity = 1.0) {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.frequency.setValueAtTime(140, time);
+            osc.frequency.exponentialRampToValueAtTime(32, time + 0.12);
+            gain.gain.setValueAtTime(0.7 * intensity, time);
+            gain.gain.exponentialRampToValueAtTime(0.001, time + 0.22);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(time);
+            osc.stop(time + 0.23);
+        }
+
+        function playSnareSound(time, intensity = 1.0) {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const oscGain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(180, time);
+            osc.frequency.exponentialRampToValueAtTime(60, time + 0.08);
+            oscGain.gain.setValueAtTime(0.25 * intensity, time);
+            oscGain.gain.exponentialRampToValueAtTime(0.001, time + 0.12);
+            osc.connect(oscGain);
+            oscGain.connect(audioCtx.destination);
+            osc.start(time);
+            osc.stop(time + 0.13);
+
+            const bufferSize = Math.floor(audioCtx.sampleRate * 0.12);
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'highpass';
+            filter.frequency.value = 1200;
+
+            const noiseGain = audioCtx.createGain();
+            noiseGain.gain.setValueAtTime(0.3 * intensity, time);
+            noiseGain.gain.exponentialRampToValueAtTime(0.001, time + 0.12);
+
+            noise.connect(filter);
+            filter.connect(noiseGain);
+            noiseGain.connect(audioCtx.destination);
+            noise.start(time);
+            noise.stop(time + 0.13);
+        }
+
+        function playHiHatSound(time, isOpen = false, volume = 0.12) {
+            if (!audioCtx) return;
+            const duration = isOpen ? 0.2 : 0.04;
+            const bufferSize = Math.floor(audioCtx.sampleRate * duration);
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'highpass';
+            filter.frequency.value = 7000;
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(volume, time);
+            gain.gain.exponentialRampToValueAtTime(0.001, time + duration - 0.005);
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+            noise.start(time);
+            noise.stop(time + duration);
+        }
+
+        function playBassNote(freq, time, duration = 0.25, volume = 0.2) {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            const filter = audioCtx.createBiquadFilter();
+
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(freq, time);
+
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(320, time);
+
+            gain.gain.setValueAtTime(0.001, time);
+            gain.gain.linearRampToValueAtTime(volume, time + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.001, time + duration);
+
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(time);
+            osc.stop(time + duration + 0.02);
+        }
+
+        function playChordStab(freqs, time, duration = 0.5) {
+            if (!audioCtx) return;
+            freqs.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                const filter = audioCtx.createBiquadFilter();
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, time);
+
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(800, time);
+
+                gain.gain.setValueAtTime(0.001, time);
+                gain.gain.linearRampToValueAtTime(0.04, time + 0.03 + (i * 0.01));
+                gain.gain.exponentialRampToValueAtTime(0.0001, time + duration);
+
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(time + (i * 0.02));
+                osc.stop(time + duration + 0.05);
+            });
+        }
+
+        function startAmbientSound() {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                if (['lofiBeat', 'lofiGroove', 'lofiElectro'].includes(currentSoundType)) {
+                    startRhythmicLofiGenerator(currentSoundType);
+                } else if (currentSoundType === 'lofi' || currentSoundType === 'lofiChords') {
+                    startLofiGenerator(currentSoundType);
+                } else if (currentSoundType === 'waves') {
+                    startOceanWaves();
+                } else {
+                    const bufferSize = audioCtx.sampleRate * 2;
+                    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                    const output = noiseBuffer.getChannelData(0);
+
+                    if (currentSoundType === 'brown') {
+                        let lastOut = 0.0;
+                        for (let i = 0; i < bufferSize; i++) {
+                            let white = Math.random() * 2 - 1;
+                            output[i] = (lastOut + (0.02 * white)) / 1.02;
+                            lastOut = output[i];
+                            output[i] *= 0.12;
+                        }
+                    } else {
+                        // Chuva suave
+                        let b0 = 0, b1 = 0;
+                        for (let i = 0; i < bufferSize; i++) {
+                            let white = Math.random() * 2 - 1;
+                            b0 = 0.99 * b0 + white * 0.05;
+                            b1 = 0.96 * b1 + white * 0.1;
+                            output[i] = b0 + b1 + white * 0.1;
+                            output[i] *= 0.04;
+                        }
+                    }
+
+                    ambientNoiseNode = audioCtx.createBufferSource();
+                    ambientNoiseNode.buffer = noiseBuffer;
+                    ambientNoiseNode.loop = true;
+
+                    ambientGainNode = audioCtx.createGain();
+                    ambientGainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+
+                    ambientNoiseNode.connect(ambientGainNode);
+                    ambientGainNode.gain.connect(audioCtx.destination);
+                    ambientNoiseNode.start();
+                }
+
+                isAmbientPlaying = true;
+                document.getElementById('ambientStateText').textContent = "Pausar";
+                document.getElementById('ambientIcon').className = "fa-solid fa-pause text-[10px]";
+                showToast("Som de Foco Ativado", "fa-headphones");
+            } catch (e) {
+                console.error("Erro ao iniciar som ambient:", e);
+            }
+        }
+
+        function startRhythmicLofiGenerator(type) {
+            const bufferSize = audioCtx.sampleRate * 2;
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                let pop = Math.random() > 0.998 ? (Math.random() - 0.5) * 0.3 : 0;
+                let crackle = (Math.random() * 2 - 1) * 0.01;
+                output[i] = pop + crackle;
             }
 
-            updateDisplay();
+            ambientNoiseNode = audioCtx.createBufferSource();
+            ambientNoiseNode.buffer = noiseBuffer;
+            ambientNoiseNode.loop = true;
+
+            ambientGainNode = audioCtx.createGain();
+            ambientGainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+
+            ambientNoiseNode.connect(ambientGainNode);
+            ambientGainNode.connect(audioCtx.destination);
+            ambientNoiseNode.start();
+
+            let bpm = 84;
+            if (type === 'lofiGroove') bpm = 96;
+            if (type === 'lofiElectro') bpm = 118;
+
+            const stepDuration = (60 / bpm) / 4;
+            let step = 0;
+
+            const chordNotes = [
+                [349.23, 440.00, 523.25], 
+                [329.63, 392.00, 493.88], 
+                [293.66, 349.23, 440.00], 
+                [261.63, 329.63, 392.00]  
+            ];
+            const bassFreqs = [174.61 / 2, 164.81 / 2, 146.83 / 2, 130.81 / 2];
+
+            function runBeatStep() {
+                if (!isAmbientPlaying) return;
+                const now = audioCtx.currentTime;
+                const chordIdx = Math.floor(step / 16) % 4;
+                const subStep = step % 16;
+
+                if (type === 'lofiBeat') {
+                    if (subStep === 0 || subStep === 7 || subStep === 10) playKickSound(now, 1.0);
+                    if (subStep === 4 || subStep === 12) playSnareSound(now, 1.0);
+                    if (subStep % 2 === 0) {
+                        const isSwing = subStep % 4 === 2;
+                        playHiHatSound(now + (isSwing ? 0.02 : 0), false, subStep === 14 ? 0.18 : 0.1);
+                    }
+                    if (subStep === 0 || subStep === 6 || subStep === 10) {
+                        playBassNote(bassFreqs[chordIdx], now, 0.35, 0.3);
+                    }
+                    if (subStep === 0 || subStep === 8) {
+                        playChordStab(chordNotes[chordIdx], now, 0.8);
+                    }
+                } else if (type === 'lofiGroove') {
+                    if (subStep === 0 || subStep === 3 || subStep === 8 || subStep === 10 || subStep === 14) playKickSound(now, 0.9);
+                    if (subStep === 4 || subStep === 12) playSnareSound(now, 1.1);
+                    if (subStep === 15) playSnareSound(now, 0.3);
+                    playHiHatSound(now, subStep === 14, subStep % 2 === 0 ? 0.12 : 0.06);
+                    if (subStep === 0 || subStep === 3 || subStep === 6 || subStep === 8 || subStep === 11 || subStep === 14) {
+                        playBassNote(bassFreqs[chordIdx], now, 0.22, 0.28);
+                    }
+                    if (subStep === 0 || subStep === 3 || subStep === 8 || subStep === 12) {
+                        playChordStab(chordNotes[chordIdx], now, 0.5);
+                    }
+                } else if (type === 'lofiElectro') {
+                    if (subStep % 4 === 0) playKickSound(now, 1.1);
+                    if (subStep === 4 || subStep === 12) playSnareSound(now, 0.9);
+                    if (subStep % 4 === 2) playHiHatSound(now, true, 0.15);
+                    if (subStep % 2 === 0) playHiHatSound(now, false, 0.08);
+                    if (subStep % 2 === 0) {
+                        playBassNote(bassFreqs[chordIdx], now, 0.18, 0.32);
+                    }
+                    if (subStep === 0 || subStep === 8) {
+                        playChordStab(chordNotes[chordIdx], now, 1.2);
+                    }
+                }
+
+                step++;
+            }
+
+            runBeatStep();
+            beatInterval = setInterval(runBeatStep, stepDuration * 1000);
         }
 
-        // SISTEMA DE TAREFAS / OBJETIVOS TÁTICOS
-        function renderTasks() {
-            taskList.innerHTML = '';
-            const completedCount = tasks.filter(t => t.done).length;
-            taskCompletedRatio.textContent = `${completedCount}/${tasks.length}`;
+        function startOceanWaves() {
+            const bufferSize = audioCtx.sampleRate * 3;
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                output[i] = Math.random() * 2 - 1;
+            }
 
-            if (tasks.length === 0) {
-                taskList.innerHTML = `<li class="text-[11px] text-slate-500 text-center py-3">Nenhum objetivo definido. Adicione acima para iniciar!</li>`;
+            ambientNoiseNode = audioCtx.createBufferSource();
+            ambientNoiseNode.buffer = noiseBuffer;
+            ambientNoiseNode.loop = true;
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(300, audioCtx.currentTime);
+
+            ambientGainNode = audioCtx.createGain();
+            ambientGainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+
+            const lfo = audioCtx.createOscillator();
+            lfo.frequency.value = 0.15; 
+            const lfoGain = audioCtx.createGain();
+            lfoGain.gain.value = 400;
+
+            lfo.connect(lfoGain);
+            lfoGain.connect(filter.frequency);
+
+            ambientNoiseNode.connect(filter);
+            filter.connect(ambientGainNode);
+            ambientGainNode.connect(audioCtx.destination);
+
+            ambientNoiseNode.start();
+            lfo.start();
+        }
+
+        function startLofiGenerator(type) {
+            const bufferSize = audioCtx.sampleRate * 2;
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                let pop = Math.random() > 0.997 ? (Math.random() - 0.5) * 0.4 : 0;
+                let crackle = (Math.random() * 2 - 1) * 0.015;
+                output[i] = pop + crackle;
+            }
+
+            ambientNoiseNode = audioCtx.createBufferSource();
+            ambientNoiseNode.buffer = noiseBuffer;
+            ambientNoiseNode.loop = true;
+
+            ambientGainNode = audioCtx.createGain();
+            ambientGainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
+
+            ambientNoiseNode.connect(ambientGainNode);
+            ambientGainNode.connect(audioCtx.destination);
+            ambientNoiseNode.start();
+
+            const chords = [
+                [349.23, 440.00, 523.25, 659.25], 
+                [329.63, 392.00, 493.88, 587.33], 
+                [293.66, 349.23, 440.00, 523.25], 
+                [261.63, 329.63, 392.00, 493.88]  
+            ];
+
+            let chordIndex = 0;
+
+            function playNextLofiChord() {
+                if (!isAmbientPlaying) return;
+                const now = audioCtx.currentTime;
+                const chord = chords[chordIndex];
+
+                chord.forEach((freq, i) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    const filter = audioCtx.createBiquadFilter();
+
+                    osc.type = type === 'lofiChords' ? 'sine' : 'triangle';
+                    
+                    const detune = (Math.random() - 0.5) * 12;
+                    osc.frequency.setValueAtTime(freq, now);
+                    osc.detune.setValueAtTime(detune, now);
+
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(700, now);
+
+                    gain.gain.setValueAtTime(0.001, now);
+                    gain.gain.linearRampToValueAtTime(0.06, now + 0.3 + (i * 0.05));
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.2);
+
+                    osc.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start(now + (i * 0.04));
+                    osc.stop(now + 3.4);
+                });
+
+                chordIndex = (chordIndex + 1) % chords.length;
+            }
+
+            playNextLofiChord();
+            lofiTimer = setInterval(playNextLofiChord, 3200);
+        }
+
+        function stopAmbientSound() {
+            if (ambientNoiseNode) {
+                try { ambientNoiseNode.stop(); } catch(e){}
+                ambientNoiseNode = null;
+            }
+            if (lofiTimer) {
+                clearInterval(lofiTimer);
+                lofiTimer = null;
+            }
+            if (beatInterval) {
+                clearInterval(beatInterval);
+                beatInterval = null;
+            }
+            isAmbientPlaying = false;
+            document.getElementById('ambientStateText').textContent = "Ligar";
+            document.getElementById('ambientIcon').className = "fa-solid fa-play text-[10px]";
+        }
+
+        function playNotificationSound() {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                const now = audioCtx.currentTime;
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.15);
+                osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.3);
+
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.85);
+            } catch(e){}
+        }
+
+        function addTask() {
+            const input = document.getElementById('inputNewTask');
+            const prioritySelect = document.getElementById('selectPriority');
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            const newTask = {
+                id: Date.now(),
+                text: text,
+                priority: prioritySelect.value,
+                completed: false
+            };
+
+            tasks.push(newTask);
+            input.value = '';
+            saveData();
+            renderTasks();
+            showToast("Objetivo Adicionado", "fa-plus");
+        }
+
+        function toggleTask(id) {
+            tasks = tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
+            saveData();
+            renderTasks();
+        }
+
+        function deleteTask(id) {
+            tasks = tasks.filter(t => t.id !== id);
+            saveData();
+            renderTasks();
+        }
+
+        function renderTasks() {
+            const container = document.getElementById('tasksList');
+            const counter = document.getElementById('tasksCounter');
+
+            if (!tasks || tasks.length === 0) {
+                container.innerHTML = `<div class="text-center text-[11px] text-app-muted py-3">Nenhum objetivo definido. Adicione acima para iniciar!</div>`;
+                counter.textContent = "CONCLUÍDAS: 0/0";
                 return;
             }
 
-            tasks.forEach((task, index) => {
-                const li = document.createElement('li');
-                li.className = `flex items-center justify-between p-2.5 rounded-xl bg-tactical-950 border border-tactical-800 text-xs transition-all ${task.done ? 'opacity-40' : ''}`;
-                
-                const priorityBadge = task.priority === 'Alta' ? '🔴' : task.priority === 'Média' ? '🟡' : '🟢';
+            const completedCount = tasks.filter(t => t.completed).length;
+            counter.textContent = `CONCLUÍDAS: ${completedCount}/${tasks.length}`;
 
-                li.innerHTML = `
-                    <div class="flex items-center gap-2 overflow-hidden mr-2">
-                        <button onclick="toggleTask(${index})" class="w-5 h-5 rounded-md border ${task.done ? 'bg-tactical-amber border-tactical-amber text-tactical-950' : 'border-tactical-700'} flex items-center justify-center transition-all">
-                            ${task.done ? '<i class="fa-solid fa-check text-[10px]"></i>' : ''}
+            const priorityBadge = {
+                alta: '<span class="text-[9px] px-1.5 py-0.5 rounded bg-red-500/10 text-red-400 font-bold border border-red-500/20">Alta</span>',
+                media: '<span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 font-bold border border-amber-500/20">Média</span>',
+                baixa: '<span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">Baixa</span>'
+            };
+
+            container.innerHTML = tasks.map(task => `
+                <div class="p-2.5 bg-app-element rounded-xl border border-app flex items-center justify-between gap-2 group transition-all">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <button onclick="toggleTask(${task.id})" class="w-5 h-5 rounded-md border border-app flex items-center justify-center shrink-0 ${task.completed ? 'bg-brand text-black' : 'text-transparent hover:text-app-muted'}">
+                            <i class="fa-solid fa-check text-[10px]"></i>
                         </button>
-                        <span class="text-[10px]">${priorityBadge}</span>
-                        <span class="${task.done ? 'line-through text-slate-500' : 'text-slate-200'} font-medium truncate">${escapeHtml(task.text)}</span>
+                        <span class="text-xs font-semibold truncate ${task.completed ? 'line-through text-app-muted' : ''}">${escapeHtml(task.text)}</span>
                     </div>
-                    <button onclick="deleteTask(${index})" class="text-slate-600 hover:text-rose-400 p-1 transition-all">
-                        <i class="fa-solid fa-trash-can text-xs"></i>
-                    </button>
-                `;
-                taskList.appendChild(li);
-            });
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        ${priorityBadge[task.priority] || ''}
+                        <button onclick="deleteTask(${task.id})" class="text-app-muted hover:text-red-400 p-1 transition-colors">
+                            <i class="fa-solid fa-trash-can text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        function addTask(e) {
-            e.preventDefault();
-            playTacticalSound('click');
-            const input = document.getElementById('taskInput');
-            const priority = document.getElementById('taskPriority').value;
-            const text = input.value.trim();
-            if (!text) return;
+        function openSettingsModal() {
+            document.getElementById('cfgFocusTime').value = Math.floor(config.focus / 60);
+            document.getElementById('cfgShortBreakTime').value = Math.floor(config.shortBreak / 60);
+            document.getElementById('cfgLongBreakTime').value = Math.floor(config.longBreak / 60);
 
-            tasks.push({ text, priority, done: false });
-            input.value = '';
-            saveTasks();
-            renderTasks();
-            showToast("Objetivo adicionado com sucesso!", "fa-check");
+            document.getElementById('cfgNameFocus').value = config.nameFocus || 'Foco Profundo';
+            document.getElementById('cfgNameShort').value = config.nameShort || 'Pausa Curta';
+            document.getElementById('cfgNameLong').value = config.nameLong || 'Recarga Longa';
+
+            document.getElementById('settingsModal').classList.remove('hidden');
         }
 
-        function toggleTask(index) {
-            playTacticalSound('click');
-            tasks[index].done = !tasks[index].done;
-            saveTasks();
-            renderTasks();
-        }
-
-        function deleteTask(index) {
-            playTacticalSound('click');
-            tasks.splice(index, 1);
-            saveTasks();
-            renderTasks();
-        }
-
-        function escapeHtml(str) {
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-        }
-
-        function saveTasks() {
-            localStorage.setItem('tactical_tasks', JSON.stringify(tasks));
-        }
-
-        function saveStats() {
-            localStorage.setItem('tactical_pomodoros_today', completedPomodorosToday);
-            localStorage.setItem('tactical_total_minutes', totalMinutesFocused);
-        }
-
-        function loadData() {
-            const savedTasks = localStorage.getItem('tactical_tasks');
-            if (savedTasks) tasks = JSON.parse(savedTasks);
-
-            const savedPomo = localStorage.getItem('tactical_pomodoros_today');
-            if (savedPomo) completedPomodorosToday = parseInt(savedPomo);
-
-            const savedMin = localStorage.getItem('tactical_total_minutes');
-            if (savedMin) totalMinutesFocused = parseFloat(savedMin);
-
-            renderTasks();
-        }
-
-        // ESTATÍSTICAS E MODAL
-        function toggleStatsModal() {
-            playTacticalSound('click');
-            const modal = document.getElementById('statsModal');
-            const box = document.getElementById('statsModalBox');
-
-            document.getElementById('statTodayCount').textContent = completedPomodorosToday;
-            document.getElementById('statTotalHours').textContent = (totalMinutesFocused / 60).toFixed(1) + 'h';
-            
-            const goalPercent = Math.min(100, Math.round((completedPomodorosToday / 4) * 100));
-            document.getElementById('statGoalPercent').textContent = `${goalPercent}%`;
-            document.getElementById('statGoalBar').style.width = `${goalPercent}%`;
-
-            if (modal.classList.contains('opacity-0')) {
-                modal.classList.remove('opacity-0', 'pointer-events-none');
-                box.classList.remove('scale-95');
-                box.classList.add('scale-100');
-            } else {
-                modal.classList.add('opacity-0', 'pointer-events-none');
-                box.classList.remove('scale-100');
-                box.classList.add('scale-95');
-            }
-        }
-
-        function openSettings() {
-            playTacticalSound('click');
-            document.getElementById('inputFocus').value = config.focus / 60;
-            document.getElementById('inputShort').value = config.shortBreak / 60;
-            document.getElementById('inputLong').value = config.longBreak / 60;
-            document.getElementById('inputHaptics').checked = config.enableHaptics;
-
-            const modal = document.getElementById('settingsModal');
-            const box = document.getElementById('settingsModalBox');
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-            box.classList.remove('scale-95');
-            box.classList.add('scale-100');
-        }
-
-        function closeSettings() {
-            playTacticalSound('click');
-            const modal = document.getElementById('settingsModal');
-            const box = document.getElementById('settingsModalBox');
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            box.classList.remove('scale-100');
-            box.classList.add('scale-95');
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.add('hidden');
         }
 
         function saveSettings() {
-            playTacticalSound('click');
-            const f = parseInt(document.getElementById('inputFocus').value) || 25;
-            const s = parseInt(document.getElementById('inputShort').value) || 5;
-            const l = parseInt(document.getElementById('inputLong').value) || 15;
-            config.enableHaptics = document.getElementById('inputHaptics').checked;
+            const focusMin = parseInt(document.getElementById('cfgFocusTime').value) || 25;
+            const shortMin = parseInt(document.getElementById('cfgShortBreakTime').value) || 5;
+            const longMin = parseInt(document.getElementById('cfgLongBreakTime').value) || 15;
 
-            config.focus = f * 60;
-            config.shortBreak = s * 60;
-            config.longBreak = l * 60;
+            config.focus = Math.max(1, focusMin) * 60;
+            config.shortBreak = Math.max(1, shortMin) * 60;
+            config.longBreak = Math.max(1, longMin) * 60;
 
-            closeSettings();
-            resetTimer();
-            showToast("Novos tempos configurados!", "fa-sliders");
+            config.nameFocus = document.getElementById('cfgNameFocus').value.trim() || 'Foco Profundo';
+            config.nameShort = document.getElementById('cfgNameShort').value.trim() || 'Pausa Curta';
+            config.nameLong = document.getElementById('cfgNameLong').value.trim() || 'Recarga Longa';
+
+            saveData();
+            updateLabels();
+            closeSettingsModal();
+
+            if (!isRunning) {
+                timeLeft = config[currentMode];
+                totalTime = config[currentMode];
+                updateDisplay();
+            }
+
+            showToast("Configurações Salvas", "fa-sliders");
+        }
+
+        function openStatsModal() {
+            updateStatsDisplay();
+            document.getElementById('statsModal').classList.remove('hidden');
+        }
+
+        function closeStatsModal() {
+            document.getElementById('statsModal').classList.add('hidden');
+        }
+
+        function updateStatsDisplay() {
+            document.getElementById('statPomodoros').textContent = completedPomodorosToday;
+            document.getElementById('statMinutes').textContent = `${totalMinutesFocused}m`;
+        }
+
+        function resetStats() {
+            completedPomodorosToday = 0;
+            totalMinutesFocused = 0;
+            saveData();
+            updateStatsDisplay();
+            showToast("Estatísticas Reiniciadas", "fa-rotate-right");
         }
 
         function showToast(message, iconClass = "fa-circle-check") {
@@ -764,7 +1313,7 @@
             const toastIcon = document.getElementById('toastIcon');
 
             toastMsg.textContent = message;
-            toastIcon.className = `fa-solid ${iconClass} text-tactical-amber text-lg`;
+            toastIcon.className = `fa-solid ${iconClass} text-brand`;
 
             toast.classList.remove('translate-y-20', 'opacity-0');
             toast.classList.add('translate-y-0', 'opacity-100');
@@ -775,12 +1324,11 @@
             }, 3000);
         }
 
-        // INICIALIZAÇÃO INICIAL AO CARREGAR
-        window.onload = function() {
-            progressRing.style.strokeDasharray = `${circumference} ${circumference}`;
-            loadData();
-            updateDisplay();
-        };
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
     </script>
 </body>
 </html>
